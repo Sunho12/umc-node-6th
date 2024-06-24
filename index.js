@@ -3,6 +3,18 @@ import { response } from './config/response.js'
 import { tempRouter } from './src/routes/temp.route.js'
 import { BaseError } from './config/error.js';
 import { status } from './config/response.status.js';
+<<<<<<< Updated upstream
+=======
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { userRouter } from './src/routes/user.route.js';
+import { storeRouter } from './src/routes/store.route.js';
+import { specs } from './config/swagger.config.js';
+import SwaggerUi from 'swagger-ui-express';
+import { StatusCodes } from 'http-status-codes';
+
+dotenv.config();
+>>>>>>> Stashed changes
 
 const app = express();
 const port = 3000;
@@ -10,6 +22,13 @@ const port = 3000;
 // router setting
 app.use('/temp', tempRouter);
 
+<<<<<<< Updated upstream
+=======
+app.use('/user', userRouter);
+
+app.use('/:storeId', storeRouter);
+
+>>>>>>> Stashed changes
 app.use((req, res, next) => {
   const err = new BaseError(status.NOT_FOUND);
   next(err);
@@ -21,7 +40,11 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;   
   // 개발환경이면 에러를 출력하고 아니면 출력하지 않기
   res.locals.error = process.env.NODE_ENV !== 'production' ? err : {}; 
+<<<<<<< Updated upstream
   res.status(err.data.status).send(response(err.data));
+=======
+  res.status(err.data.status || StatusCodes.INTERNAL_SERVER_ERROR).send(response(err));
+>>>>>>> Stashed changes
 });
 
 app.listen(port, () => {
